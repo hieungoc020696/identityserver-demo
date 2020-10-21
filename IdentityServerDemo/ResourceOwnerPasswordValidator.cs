@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using IdentityModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
 
@@ -17,15 +20,13 @@ namespace IdentityServerDemo
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEventService _events;
         private readonly ILogger<ResourceOwnerPasswordValidator<IdentityUser>> _logger;
-        private readonly IStringLocalizer<ResourceOwnerPasswordValidator> _localizer;
 
-        public ResourceOwnerPasswordValidator(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IEventService events, ILogger<ResourceOwnerPasswordValidator<IdentityUser>> logger, IStringLocalizer<ResourceOwnerPasswordValidator> localizer)
+        public ResourceOwnerPasswordValidator(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IEventService events, ILogger<ResourceOwnerPasswordValidator<IdentityUser>> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _events = events;
             _logger = logger;
-            _localizer = localizer;
         }
 
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
@@ -48,7 +49,7 @@ namespace IdentityServerDemo
                 {
                     _logger.LogInformation("Authentication failed for username: {username}, reason: locked out", context.UserName);
                     await _events.RaiseAsync(new UserLoginFailureEvent(context.UserName, "locked out", interactive: false));
-                    context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, _localizer["User account locked out."]);
+                    context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "User account locked out.");
                     return;
                 }
 
@@ -56,19 +57,19 @@ namespace IdentityServerDemo
                 {
                     _logger.LogInformation("Authentication failed for username: {username}, reason: not allowed", context.UserName);
                     await _events.RaiseAsync(new UserLoginFailureEvent(context.UserName, "not allowed", interactive: false));
-                    context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, _localizer["User account locked out."]);
+                    context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "User account locked out.");
                     return;
                 }
 
                 _logger.LogInformation("Authentication failed for username: {username}, reason: invalid credentials", context.UserName);
                 await _events.RaiseAsync(new UserLoginFailureEvent(context.UserName, "invalid credentials", interactive: false));
-                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, _localizer["Wrong password"]);
+                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "Wrong password");
                 return;
             }
 
             _logger.LogInformation("No user found matching username: {username}", context.UserName);
             await _events.RaiseAsync(new UserLoginFailureEvent(context.UserName, "invalid username", interactive: false));
-            context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, _localizer["No user found with this name or email address"]);
+            context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "No user found with this name or email address");
         }
     }
 }
