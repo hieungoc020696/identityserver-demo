@@ -6,7 +6,7 @@
     <ProjectGuid>b71615a4-a5d9-4dd4-a091-50b0032798ab</ProjectGuid>
     <DockerLaunchAction>None</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/weatherforecast</DockerServiceUrl>
-    <DockerServiceName>elnplus.api</DockerServiceName>
+    <DockerServiceName>identity-api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

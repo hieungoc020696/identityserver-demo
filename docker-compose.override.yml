@@ -15,9 +15,7 @@ services:
 
   identity-api:
     environment:
-      - Standalone=true
       - ASPNETCORE_ENVIRONMENT=Development
-      - Logging__LogLevel__Default=Warning
     ports:
       - "5001:80"
     networks:

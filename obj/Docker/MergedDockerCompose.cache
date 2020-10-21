@@ -1,7 +1,7 @@
 services:
   api:
     build:
-      context: D:\Projects\IdentityServerDemo
+      context: D:\Projects\IdentityServer\identityserver-demo
       dockerfile: Api/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
@@ -13,21 +13,16 @@ services:
       target: 80
   identity-api:
     build:
-      context: D:\Projects\IdentityServerDemo
+      context: D:\Projects\IdentityServer\identityserver-demo
       dockerfile: IdentityServerDemo/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      Logging__LogLevel__Default: Warning
-      Standalone: "true"
     image: docker.debugger.vn/identity-api
     networks:
       default: {}
     ports:
     - published: 5001
       target: 80
-    volumes:
-    - /tmp/aspnet-keyring:/var/keyring:rw
-    - D:\Projects\IdentityServerDemo\.vscode\vsdbg:/vsdbg:rw
   postgresql-data:
     environment:
       POSTGRES_PASSWORD: DigiMed123

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using Api;
-using System;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using IdentityServer4;
+using IdentityServerDemo.Services;
 
 namespace IdentityServerDemo
 {
@@ -29,7 +27,6 @@ namespace IdentityServerDemo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(options =>
                options
                    .UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), b =>
@@ -39,8 +36,8 @@ namespace IdentityServerDemo
                    }));
 
             services.AddIdentity<IdentityUser, IdentityRole>()
-               .AddEntityFrameworkStores<ApplicationDbContext>()
-               .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services
                 .AddIdentityServer(options =>
@@ -58,6 +55,8 @@ namespace IdentityServerDemo
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<IdentityUser>()
                 .AddJwtBearerClientAuthentication()
+                .AddProfileService<ProfileService>()
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
                 .AddDeveloperSigningCredential();
 
             services.AddAuthentication().AddIdentityServerAuthentication(options =>
@@ -68,17 +67,7 @@ namespace IdentityServerDemo
                 options.ApiName = settings.ApiName;
                 options.ApiSecret = settings.ApiSecret;
             });
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = $"/Identity/Account/Login";
-                options.LogoutPath = $"/Identity/Account/Logout";
-                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
-            });
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
-            });
-
+            services.AddControllersWithViews();
             services.AddRazorPages();
         }
 
@@ -96,8 +85,13 @@ namespace IdentityServerDemo
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            // fix chrome browser,Chrome enabled a new feature "Cookies without SameSite must be secure", 
+            // the cookies shoold be expided from https, but in demo project, the internal comunicacion in docker compose is http.
+            // To avoid this problem, the policy of cookies shold be in Lax mode.
+            // vì mày mà t mất cả ngày
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax }); // 
+
             app.UseRouting();
             app.UseIdentityServer();
             app.UseAuthorization();

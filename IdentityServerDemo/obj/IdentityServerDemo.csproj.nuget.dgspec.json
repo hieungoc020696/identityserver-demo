@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\IdentityServerDemo\\IdentityServerDemo\\IdentityServerDemo.csproj": {}
+    "D:\\Projects\\IdentityServer\\identityserver-demo\\IdentityServerDemo\\IdentityServerDemo.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\IdentityServerDemo\\IdentityServerDemo\\IdentityServerDemo.csproj": {
+    "D:\\Projects\\IdentityServer\\identityserver-demo\\IdentityServerDemo\\IdentityServerDemo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\IdentityServerDemo\\IdentityServerDemo\\IdentityServerDemo.csproj",
+        "projectUniqueName": "D:\\Projects\\IdentityServer\\identityserver-demo\\IdentityServerDemo\\IdentityServerDemo.csproj",
         "projectName": "IdentityServerDemo",
-        "projectPath": "D:\\Projects\\IdentityServerDemo\\IdentityServerDemo\\IdentityServerDemo.csproj",
-        "packagesPath": "C:\\Users\\hieun\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\IdentityServerDemo\\IdentityServerDemo\\obj\\",
+        "projectPath": "D:\\Projects\\IdentityServer\\identityserver-demo\\IdentityServerDemo\\IdentityServerDemo.csproj",
+        "packagesPath": "C:\\Users\\HIEU NGOC\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\IdentityServer\\identityserver-demo\\IdentityServerDemo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\hieun\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HIEU NGOC\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,6 +43,10 @@
               "version": "[3.0.1, )"
             },
             "IdentityServer4.AspNetIdentity": {
+              "target": "Package",
+              "version": "[4.1.1, )"
+            },
+            "IdentityServer4.EntityFramework": {
               "target": "Package",
               "version": "[4.1.1, )"
             },
@@ -109,7 +113,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

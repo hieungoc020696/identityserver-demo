@@ -8,7 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["IdentityServerDemo/IdentityServerDemo.csproj", "IdentityServerDemo/"]
-RUN dotnet restore "IdentityServerDemo/IdentityServerDemo.csproj"
+RUN dotnet restore "IdentityServerDemo/IdentityServerDemo.csproj" --disable-parallel
 COPY . .
 WORKDIR "/src/IdentityServerDemo"
 RUN dotnet build "IdentityServerDemo.csproj" -c Release -o /app/build

@@ -14,10 +14,10 @@ services:
       - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
       - NUGET_FALLBACK_PACKAGES=
     volumes:
-      - D:\Projects\IdentityServerDemo\Api:/app
-      - D:\Projects\IdentityServerDemo:/src
-      - C:\Users\hieun\vsdbg\vs2017u5:/remote_debugger:rw
-      - C:\Users\hieun\.nuget\packages\:/root/.nuget/packages:ro
+      - D:\Projects\IdentityServer\identityserver-demo\Api:/app
+      - D:\Projects\IdentityServer\identityserver-demo:/src
+      - C:\Users\HIEU NGOC\vsdbg\vs2017u5:/remote_debugger:rw
+      - C:\Users\HIEU NGOC\.nuget\packages\:/root/.nuget/packages:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
@@ -41,10 +41,10 @@ services:
       - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
       - NUGET_FALLBACK_PACKAGES=
     volumes:
-      - D:\Projects\IdentityServerDemo\IdentityServerDemo:/app
-      - D:\Projects\IdentityServerDemo:/src
-      - C:\Users\hieun\vsdbg\vs2017u5:/remote_debugger:rw
-      - C:\Users\hieun\.nuget\packages\:/root/.nuget/packages:ro
+      - D:\Projects\IdentityServer\identityserver-demo\IdentityServerDemo:/app
+      - D:\Projects\IdentityServer\identityserver-demo:/src
+      - C:\Users\HIEU NGOC\vsdbg\vs2017u5:/remote_debugger:rw
+      - C:\Users\HIEU NGOC\.nuget\packages\:/root/.nuget/packages:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 

@@ -16,7 +16,7 @@ namespace IdentityServerDemo
         public static IEnumerable<ApiScope> ApiScopes => new List<ApiScope>
         {
             new ApiScope("api", "my api"),
-             new ApiScope("identity", "my identity"),
+            new ApiScope("identity", "my identity"),
 
         };
 
@@ -59,6 +59,8 @@ namespace IdentityServerDemo
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
                         "api"
                     }
                 },
@@ -79,6 +81,8 @@ namespace IdentityServerDemo
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
                         "api"
                     }
                 }
