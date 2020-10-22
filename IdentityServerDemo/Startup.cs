@@ -67,6 +67,11 @@ namespace IdentityServerDemo
                 options.ApiName = settings.ApiName;
                 options.ApiSecret = settings.ApiSecret;
             });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.LoginPath = "/Identity/Account/Login";
+            });
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

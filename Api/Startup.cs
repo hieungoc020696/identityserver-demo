@@ -29,7 +29,7 @@ namespace Api
             services.AddControllers();
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>
+                .AddIdentityServerAuthentication(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     var settings = Configuration.GetSection("Authentication").Get<AuthenticationSettings>();
                     options.Authority = settings.Authority;
@@ -48,11 +48,16 @@ namespace Api
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors(opts =>
+            {
+                opts.AllowAnyHeader();
+                opts.AllowAnyMethod();
+                opts.AllowCredentials();
+                opts.SetIsOriginAllowed(origin => true);
+            });
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
