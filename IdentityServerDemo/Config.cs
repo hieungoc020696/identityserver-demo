@@ -45,7 +45,10 @@ namespace IdentityServerDemo
                 {
                     ClientId = "learner",
                     ClientName = "Learner Portal",
-                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedGrantTypes = {
+                        GrantType.ResourceOwnerPassword,
+                        GrantType.AuthorizationCode
+                    },
                     ClientSecrets = { new Secret("learner".Sha256()) },
                     RequireConsent = false,
                     AllowOfflineAccess = true,
@@ -55,6 +58,9 @@ namespace IdentityServerDemo
                     PostLogoutRedirectUris = new List<string> {"http://localhost:4200/"},
                     AllowedCorsOrigins = new List<string> {"http://localhost:4200"},
                     AllowAccessTokensViaBrowser = true,
+                    AccessTokenLifetime = 30,
+                    //Identity token life time is 7200 seconds (2 hour)
+                    IdentityTokenLifetime = 30,
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -68,7 +74,10 @@ namespace IdentityServerDemo
                 {
                     ClientId = "mobile",
                     ClientName = "Mobile Portal",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedGrantTypes = {
+                        GrantType.ResourceOwnerPassword,
+                        GrantType.AuthorizationCode
+                    },
                     ClientSecrets = { new Secret("mobile".Sha256()) },
                     RequireConsent = false,
                     AllowOfflineAccess = true,

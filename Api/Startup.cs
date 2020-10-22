@@ -36,6 +36,8 @@ namespace Api
                     options.RequireHttpsMetadata = settings.RequireHttpsMetadata;
                     options.ApiName = settings.ApiName;
                     options.ApiSecret = settings.ApiSecret;
+                    options.EnableCaching = true;
+                    options.CacheDuration = TimeSpan.FromMinutes(10);
                 });
         }
 

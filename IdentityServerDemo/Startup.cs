@@ -10,6 +10,7 @@ using System.Reflection;
 using Api;
 using Microsoft.AspNetCore.Http;
 using IdentityServerDemo.Services;
+using System.Threading.Tasks;
 
 namespace IdentityServerDemo
 {
@@ -59,18 +60,43 @@ namespace IdentityServerDemo
                 .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
                 .AddDeveloperSigningCredential();
 
-            services.AddAuthentication().AddIdentityServerAuthentication(options =>
-            {
-                var settings = Configuration.GetSection("Authentication").Get<AuthenticationSettings>();
-                options.Authority = settings.Authority;
-                options.RequireHttpsMetadata = settings.RequireHttpsMetadata;
-                options.ApiName = settings.ApiName;
-                options.ApiSecret = settings.ApiSecret;
-            });
+            services
+                .AddAuthentication()
+                .AddFacebook(options =>
+                    {
+                        options.AppId = Configuration["Authentication:Facebook:AppId"];
+                        options.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                        options.Events.OnRemoteFailure = (context =>
+                        {
+                            context.Response.Redirect(context.Properties.RedirectUri);
+                            context.HandleResponse();
+                            return Task.CompletedTask;
+                        });
+                    })
+                .AddGoogle(options =>
+                {
+                    options.ClientId = Configuration["Authentication:Google:ClientId"];
+                    options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                    options.Events.OnRemoteFailure = (context =>
+                    {
+                        context.Response.Redirect(context.Properties.RedirectUri);
+                        context.HandleResponse();
+                        return Task.CompletedTask;
+                    });
+                })
+                .AddIdentityServerAuthentication(options =>
+                {
+                    var settings = Configuration.GetSection("Authentication").Get<AuthenticationSettings>();
+                    options.Authority = settings.Authority;
+                    options.RequireHttpsMetadata = settings.RequireHttpsMetadata;
+                    options.ApiName = settings.ApiName;
+                    options.ApiSecret = settings.ApiSecret;
+                });
             services.ConfigureApplicationCookie(options =>
             {
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
             });
             services.AddControllersWithViews();
             services.AddRazorPages();
